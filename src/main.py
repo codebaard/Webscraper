@@ -7,11 +7,9 @@ from bs4 import BeautifulSoup as soup
 
 def main():
 
-    # make the request
-    #url = "https://pr0gramm.com"
-    url = "https://cms.hotpot.codes/AssetShowcase/Index"
-
     try:
+        # make the request
+        url = "https://pr0gramm.com"
         session = HTMLSession()
         response = session.get(url)
         print("Request yielded: " + str(response.status_code))
@@ -21,17 +19,37 @@ def main():
 
     #parse html
     page_soup = soup(response.html.html, "html.parser")
-    page_soup.prettify()
-    #print(page_soup)
 
-    lookFor = "container"
+    #print whole page html
+    # print(page_soup.prettify())
 
-    containers = page_soup.findAll("div", {"class":lookFor})
-    print("Found " + lookFor + ": " + str(len(containers)))
-    containers = containers[2:]
+    #username?
+    #name = page_soup.findAll("a", {"class":"user-profile-name"})
+    #print("Username: " + soup.prettify(name))
 
-    for container in containers:
-        print(soup.prettify(container)) 
+    lookFor = "thumb"
+    results = page_soup.findAll("a", {'class':lookFor})
+    print("Found " + lookFor + ": " + str(len(results)))
+
+    #firstItem = results[0]
+    #latestId = firstItem.get("id")[5:]
+    #print(latestId)
+
+    posts=dict()
+
+    #create dict from request
+    for item in results:
+        id = item.get("id")[5:]
+        ref = item.get("href")
+        posts[id] = ref
+
+    #create links and call GET
+    for post in posts:
+        newUrl = url + posts[post]
+        print(newUrl)
+
+
+
 
 if __name__ == "__main__":
     main()
