@@ -21,8 +21,17 @@ def main():
 
     #parse html
     page_soup = soup(response.html.html, "html.parser")
-    print(page_soup)
+    page_soup.prettify()
+    #print(page_soup)
 
+    lookFor = "container"
+
+    containers = page_soup.findAll("div", {"class":lookFor})
+    print("Found " + lookFor + ": " + str(len(containers)))
+    containers = containers[2:]
+
+    for container in containers:
+        print(soup.prettify(container)) 
 
 if __name__ == "__main__":
     main()
