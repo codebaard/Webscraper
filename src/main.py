@@ -12,7 +12,7 @@ def main():
         url = "https://pr0gramm.com"
         session = HTMLSession()
         response = session.get(url)
-        print("Request yielded: " + str(response.status_code))
+        #print("Request yielded: " + str(response.status_code))
         response.html.render()
     except requests.exceptions.RequestException as e:
         print(e)
@@ -29,7 +29,7 @@ def main():
 
     lookFor = "thumb"
     results = page_soup.findAll("a", {'class':lookFor})
-    print("Found " + lookFor + ": " + str(len(results)))
+    #print("Found " + lookFor + ": " + str(len(results)))
 
     #firstItem = results[0]
     #latestId = firstItem.get("id")[5:]
@@ -46,10 +46,13 @@ def main():
     #create links and call GET
     for post in posts:
         newUrl = url + posts[post]
-        print(newUrl)
-
-
-
+        
+        # make the request
+        response = session.get(newUrl)
+        #print("Request yielded: " + str(response.status_code))
+        response.html.render()
+        content = soup(response.html.html, "html.parser")
+        print(content.prettify())
 
 if __name__ == "__main__":
     main()
