@@ -44,15 +44,17 @@ def main():
         posts[id] = ref
 
     #create links and call GET
-    for post in posts:
-        newUrl = url + posts[post]
-        
-        # make the request
-        response = session.get(newUrl)
-        #print("Request yielded: " + str(response.status_code))
-        response.html.render()
-        content = soup(response.html.html, "html.parser")
-        print(content.prettify())
+    (k,v)  = posts.popitem()
+
+    #newUrl = url + posts[post]   
+    newUrl = url + v
+    #print(newUrl)
+    # make the request
+    response = session.get(newUrl)
+    #print("Request yielded: " + str(response.status_code))
+    response.html.render(sleep=10)
+    content = soup(response.html.html, "html.parser")
+    print(content.prettify())
 
 if __name__ == "__main__":
     main()
