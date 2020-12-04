@@ -4,6 +4,9 @@ import bs4
 from requests_html import HTMLSession
 import requests
 from bs4 import BeautifulSoup as soup
+import SinglePost
+
+
 
 def main():
 
@@ -20,9 +23,6 @@ def main():
     #parse html
     page_soup = soup(response.html.html, "html.parser")
 
-    #print whole page html
-    # print(page_soup.prettify())
-
     #username?
     #name = page_soup.findAll("a", {"class":"user-profile-name"})
     #print("Username: " + soup.prettify(name))
@@ -31,30 +31,26 @@ def main():
     results = page_soup.findAll("a", {'class':lookFor})
     #print("Found " + lookFor + ": " + str(len(results)))
 
-    #firstItem = results[0]
-    #latestId = firstItem.get("id")[5:]
-    #print(latestId)
-
-    posts=dict()
+    posts = list()
 
     #create dict from request
     for item in results:
-        id = item.get("id")[5:]
-        ref = item.get("href")
-        posts[id] = ref
+        post = SinglePost(item.get("id")[5:], 'new', item.get("href"))
+        #id = item.get("id")[5:]
+        #ref = item.get("href")
+        #posts[id] = ref
+        posts.append(post)
 
     #create links and call GET
-    (k,v)  = posts.popitem()
-
-    #newUrl = url + posts[post]   
-    newUrl = url + v
-    #print(newUrl)
-    # make the request
-    response = session.get(newUrl)
-    #print("Request yielded: " + str(response.status_code))
-    response.html.render(sleep=10)
-    content = soup(response.html.html, "html.parser")
-    print(content.prettify())
+    for post in posts:
+        newUrl = url + post.ref
+        # make the request
+        response = session.get(newUrl)
+        #print("Request yielded: " + str(response.status_code))
+        response.html.render(sleep=10)
+        content = soup(response.html.html, "html.parser")
+        print(content.prettify())
 
 if __name__ == "__main__":
+
     main()
