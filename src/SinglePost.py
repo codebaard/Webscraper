@@ -5,23 +5,20 @@
 
 class SinglePost:
 
-    #postId
-    #category
-    #href
-    #benis
-
-    def __new__(self, id, cat, ref):
+    def __init__(self, id, cat, ref):
 
         self.postId = id
         self.category = cat
         self.href = ref
-
-        return self
 
     def setVotes(self, upVotes, downVotes, benis):
         self.benis = benis
         self.upVotes = upVotes
         self.downVotes = downVotes
 
+    def setComments(self, commentCount):
+        self.commentCount = commentCoung
 
+    def setTagCount(self, tagCount):
+        self.tagCount = tagCount
  

@@ -24,23 +24,15 @@ def main():
     #parse html
     page_soup = soup(response.html.html, "html.parser")
 
-    #username?
-    #name = page_soup.findAll("a", {"class":"user-profile-name"})
-    #print("Username: " + soup.prettify(name))
-
     lookFor = "thumb"
     results = page_soup.findAll("a", {'class':lookFor})
     #print("Found " + lookFor + ": " + str(len(results)))
 
     posts = list()
 
-    #create dict from request
+    #create list of posts
     for item in results:
-        post = SinglePost(item.get("id")[5:], 'new', item.get("href"))
-        #id = item.get("id")[5:]
-        #ref = item.get("href")
-        #posts[id] = ref
-        posts.append(post)
+        posts.append(SinglePost(item.get("id")[5:], 'new', item.get("href")))
 
     #create links and call GET
     for post in posts:
@@ -48,13 +40,19 @@ def main():
         # make the request
         response = session.get(newUrl)
         #print("Request yielded: " + str(response.status_code))
-        response.html.render(sleep=1)
+        response.html.render(sleep=0.1)
         content = soup(response.html.html, "html.parser")
-        benis = content.find("div", {'class':'item-vote'}).findChildren("span", {"class":"score"})
-        votes = re.findall(r'\d+', benis[0].attrs["title"])
-        post.setVotes(post, votes[0], votes[1], benis[0].contents[0])
-        #print(content.prettify())
-        print(post.postId + " has " + post.benis + " benis")
+        try:
+            benis = content.find("div", {'class':'item-vote'}).findChildren("span", {"class":"score"})
+        except:
+            print("post deleted...?!")
+
+        try:
+            votes = re.findall(r'\d+', benis[0].attrs["title"])
+            post.setVotes(votes[0], votes[1], benis[0].contents[0])
+            print(post.postId + " has " + post.benis + " benis")
+        except:
+            print(post.postId + " has no public vote count yet")
 
 if __name__ == "__main__":
 
