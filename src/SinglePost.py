@@ -5,11 +5,22 @@
 
 class SinglePost:
 
-    postId
-    category
-    ref
- 
-    def __init__(self, id, cat, ref):
+    #postId
+    #category
+    #href
+    #benis
+
+    def __new__(self, id, cat, ref):
         self.postId = id
         self.category = cat
-        self.ref = ref
+        self.href = ref
+
+        self.Benis = 0
+
+        return self
+
+    def setBenis(benis):
+        self.Benis = benis
+
+
+ 

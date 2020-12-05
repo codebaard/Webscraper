@@ -4,7 +4,7 @@ import bs4
 from requests_html import HTMLSession
 import requests
 from bs4 import BeautifulSoup as soup
-import SinglePost
+from SinglePost import SinglePost
 
 
 
@@ -43,13 +43,15 @@ def main():
 
     #create links and call GET
     for post in posts:
-        newUrl = url + post.ref
+        newUrl = url + post.href
         # make the request
         response = session.get(newUrl)
         #print("Request yielded: " + str(response.status_code))
-        response.html.render(sleep=10)
+        response.html.render(sleep=1)
         content = soup(response.html.html, "html.parser")
-        print(content.prettify())
+        post.Benis = content.find("span", {'class':'score'})
+        #print(content.prettify())
+        print(post.postId + "has " + post.Benis + " upvotes")
 
 if __name__ == "__main__":
 
