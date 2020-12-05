@@ -11,16 +11,17 @@ class SinglePost:
     #benis
 
     def __new__(self, id, cat, ref):
+
         self.postId = id
         self.category = cat
         self.href = ref
 
-        self.Benis = 0
-
         return self
 
-    def setBenis(benis):
-        self.Benis = benis
+    def setVotes(self, upVotes, downVotes, benis):
+        self.benis = benis
+        self.upVotes = upVotes
+        self.downVotes = downVotes
 
 
  

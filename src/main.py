@@ -5,6 +5,7 @@ from requests_html import HTMLSession
 import requests
 from bs4 import BeautifulSoup as soup
 from SinglePost import SinglePost
+import re
 
 
 
@@ -49,9 +50,11 @@ def main():
         #print("Request yielded: " + str(response.status_code))
         response.html.render(sleep=1)
         content = soup(response.html.html, "html.parser")
-        post.Benis = content.find("span", {'class':'score'})
+        benis = content.find("div", {'class':'item-vote'}).findChildren("span", {"class":"score"})
+        votes = re.findall(r'\d+', benis[0].attrs["title"])
+        post.setVotes(post, votes[0], votes[1], benis[0].contents[0])
         #print(content.prettify())
-        print(post.postId + "has " + post.Benis + " upvotes")
+        print(post.postId + " has " + post.benis + " benis")
 
 if __name__ == "__main__":
 
