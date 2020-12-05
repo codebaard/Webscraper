@@ -7,8 +7,6 @@ from bs4 import BeautifulSoup as soup
 from SinglePost import SinglePost
 import re
 
-
-
 def main():
 
     try:
@@ -48,12 +46,18 @@ def main():
             print("post deleted...?!")
 
         try:
+            comments = content.find("div", {"class":"comments-head"})
+            cCount = re.findall(r'\d+', comments.text)
+            post.setComments(cCount[0])
+        except:
+            print("something wrong with comments...")
+
+        try:
             votes = re.findall(r'\d+', benis[0].attrs["title"])
             post.setVotes(votes[0], votes[1], benis[0].contents[0])
-            print(post.postId + " has " + post.benis + " benis")
+            print(post.postId + " has " + post.benis + " benis and " + post.commentCount + " comments")
         except:
             print(post.postId + " has no public vote count yet")
 
 if __name__ == "__main__":
-
     main()
