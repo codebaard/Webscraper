@@ -50,14 +50,25 @@ def main():
             cCount = re.findall(r'\d+', comments.text)
             post.setComments(cCount[0])
         except:
-            print("something wrong with comments...")
+            post.setComments(0)
 
         try:
             votes = re.findall(r'\d+', benis[0].attrs["title"])
             post.setVotes(votes[0], votes[1], benis[0].contents[0])
-            print(post.postId + " has " + post.benis + " benis and " + post.commentCount + " comments")
         except:
-            print(post.postId + " has no public vote count yet")
+            print(post.postId + " has no public vote count yet")            
+
+        try:
+            tags = content.findAll("span", {"class":"tag"})
+            #tags = re.findall(r'\d+', benis[0].attrs["title"])
+            post.setTagCount(len(tags))
+        except:
+            print("smth wrong with tags...")
+
+        try:
+            print(str(post.postId) + " has " + str(post.benis) + " benis, " + str(post.commentCount) + " comments and " + str(post.tagCount) + " tags.")
+        except:
+            print(str(post.postId) + " has no public benis, " + str(post.commentCount) + " comments and " + str(post.tagCount) + " tags.")
 
 if __name__ == "__main__":
     main()

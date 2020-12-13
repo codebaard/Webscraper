@@ -1,0 +1,6 @@
+projectKey=python-webscraper
+serverUrl=https://sonarqube.luzifer.cloud
+serverVersion=8.6.0.39681
+dashboardUrl=https://sonarqube.luzifer.cloud/dashboard?id=python-webscraper
+ceTaskId=AXZaML2ax_jk4XKzpx9P
+ceTaskUrl=https://sonarqube.luzifer.cloud/api/ce/task?id=AXZaML2ax_jk4XKzpx9P

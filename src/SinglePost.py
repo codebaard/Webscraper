@@ -17,7 +17,7 @@ class SinglePost:
         self.downVotes = downVotes
 
     def setComments(self, commentCount):
-        self.commentCount = commentCoung
+        self.commentCount = commentCount
 
     def setTagCount(self, tagCount):
         self.tagCount = tagCount
