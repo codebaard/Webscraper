@@ -4,10 +4,13 @@ import bs4
 from requests_html import HTMLSession
 import requests
 from bs4 import BeautifulSoup as soup
+from databaseHandler import databaseHandler
 from SinglePost import SinglePost
 import re
 
 def main():
+
+    mongo = databaseHandler()
 
     try:
         # make the request
@@ -56,7 +59,7 @@ def main():
             votes = re.findall(r'\d+', benis[0].attrs["title"])
             post.setVotes(votes[0], votes[1], benis[0].contents[0])
         except:
-            print(post.postId + " has no public vote count yet")            
+            post.setVotes('not public', 'not public', 'not public')           
 
         try:
             tags = content.findAll("span", {"class":"tag"})
@@ -64,11 +67,14 @@ def main():
             post.setTagCount(len(tags))
         except:
             print("smth wrong with tags...")
+            post.setTagCount(0)
 
         try:
             print(str(post.postId) + " has " + str(post.benis) + " benis, " + str(post.commentCount) + " comments and " + str(post.tagCount) + " tags.")
         except:
             print(str(post.postId) + " has no public benis, " + str(post.commentCount) + " comments and " + str(post.tagCount) + " tags.")
+
+        mongo.db.posts.insert_one(post.toBSON())
 
 if __name__ == "__main__":
     main()

@@ -22,3 +22,15 @@ class SinglePost:
     def setTagCount(self, tagCount):
         self.tagCount = tagCount
  
+    def toBSON(self):
+        post = {
+            'category'  : self.category,
+            'postId'    : self.postId,
+            'href'      : self.href,
+            'benis'     : self.benis,
+            'upvotes'   : self.upVotes,
+            'downvotes' : self.downVotes,
+            'comments'  : self.commentCount,
+            'tags'      : self.tagCount
+        }
+        return post

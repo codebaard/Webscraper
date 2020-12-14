@@ -13,6 +13,8 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>CondaEnv|CondaEnv|Webscraping</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <Environment>MONGO_CONNECTION=</Environment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -20,6 +22,9 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src\databaseHandler.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="src\main.py" />
     <Compile Include="src\SinglePost.py" />
   </ItemGroup>
