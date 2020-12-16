@@ -21,6 +21,9 @@ class SinglePost:
 
     def setTagCount(self, tagCount):
         self.tagCount = tagCount
+
+    def addTag(self, newTag):
+        self.tags.append(newTag)
  
     def toBSON(self):
         post = {
@@ -31,6 +34,6 @@ class SinglePost:
             'upvotes'   : self.upVotes,
             'downvotes' : self.downVotes,
             'comments'  : self.commentCount,
-            'tags'      : self.tagCount
+            'tags'      : self.tags
         }
         return post

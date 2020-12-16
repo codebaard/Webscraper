@@ -14,7 +14,7 @@
     <InterpreterId>CondaEnv|CondaEnv|Webscraping</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <Environment>MONGO_CONNECTION=</Environment>
+    <Environment>MONGO_CONNECTION=mongodb://root:SELo9X38Lv@luziffer.ddnss.de:27017</Environment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -27,6 +27,9 @@
     </Compile>
     <Compile Include="src\main.py" />
     <Compile Include="src\SinglePost.py" />
+    <Compile Include="src\tag.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />

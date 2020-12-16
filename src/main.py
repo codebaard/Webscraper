@@ -12,6 +12,10 @@ def main():
 
     mongo = databaseHandler()
 
+    # use https://www.youtube.com/watch?v=QoyIWDKrWU0 for login and filter process
+    #https://medium.com/level-up-programming/how-to-scrap-data-from-javascript-based-website-using-python-selenium-and-headless-web-driver-531c7fe0c01f
+    #https://github.com/SeleniumHQ/docker-selenium
+
     try:
         # make the request
         url = "https://pr0gramm.com"
