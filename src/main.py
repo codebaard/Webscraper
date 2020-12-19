@@ -68,17 +68,20 @@ def main():
         try:
             tags = content.findAll("span", {"class":"tag"})
             #tags = re.findall(r'\d+', benis[0].attrs["title"])
-            post.setTagCount(len(tags))
+            #post.setTagCount(len(tags))
+            for tag in tags:
+                post.addTag(tag)
         except:
             print("smth wrong with tags...")
-            post.setTagCount(0)
+            #post.setTagCount(0)
 
         try:
-            print(str(post.postId) + " has " + str(post.benis) + " benis, " + str(post.commentCount) + " comments and " + str(post.tagCount) + " tags.")
+            print(str(post.postId) + " has " + str(post.benis) + " benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
         except:
-            print(str(post.postId) + " has no public benis, " + str(post.commentCount) + " comments and " + str(post.tagCount) + " tags.")
+            print(str(post.postId) + " has no public benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
 
-        mongo.db.posts.insert_one(post.toBSON())
+        #mongo.db.posts.insert_one(post.toBSON())
+        print(post.toBSON())
 
 if __name__ == "__main__":
     main()
