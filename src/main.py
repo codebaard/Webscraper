@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup as soup
 from databaseHandler import databaseHandler
 from SinglePost import SinglePost
 import re
+from bson import BSON
 
 def main():
 
@@ -75,13 +76,13 @@ def main():
             print("smth wrong with tags...")
             #post.setTagCount(0)
 
-        try:
-            print(str(post.postId) + " has " + str(post.benis) + " benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
-        except:
-            print(str(post.postId) + " has no public benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
+        #try:
+        #    print(str(post.postId) + " has " + str(post.benis) + " benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
+        #except:
+        #    print(str(post.postId) + " has no public benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
 
-        #mongo.db.posts.insert_one(post.toBSON())
-        print(post.toBSON())
+        mongo.db.posts.insert_one(BSON.encode(post.toJSON()))
+        print(post.toJSON())
 
 if __name__ == "__main__":
     main()

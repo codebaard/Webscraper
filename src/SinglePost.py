@@ -1,10 +1,10 @@
 from tag import tag 
-import json
+from JSONAble import JSONAble
 # this class is made to represent the basic shape of the requested or scraped content
 # based on the scraped webpage, this can be altered and should be ultimately the only part which is changed
 # alongside database and user credential properties
 
-class SinglePost:
+class SinglePost(JSONAble):
 
     def __init__(self, id, cat, ref):
         self.tags = list()
@@ -26,22 +26,3 @@ class SinglePost:
         tagId = tagObject.attrs["id"]
         newTag = tag(text, tagCat, tagId, self.postId)
         self.tags.append(newTag)
-
-    def printTagsToList(self):
-        #output = ''
-        #for tag in self.tags:
-        #    output += tag.toBSON() + ','
-        return json.loads(tags)
- 
-    def toBSON(self):
-        post = {
-            'category'  : self.category,
-            'postId'    : self.postId,
-            'href'      : self.href,
-            'benis'     : self.benis,
-            'upvotes'   : self.upVotes,
-            'downvotes' : self.downVotes,
-            'comments'  : self.commentCount,
-            'tags'      : json.loads(self.tags)
-        }
-        return post
