@@ -22,6 +22,9 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src\comment.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="src\JSONAble.py">
       <SubType>Code</SubType>
     </Compile>

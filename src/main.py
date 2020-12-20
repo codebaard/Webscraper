@@ -17,11 +17,24 @@ def main():
     #https://medium.com/level-up-programming/how-to-scrap-data-from-javascript-based-website-using-python-selenium-and-headless-web-driver-531c7fe0c01f
     #https://github.com/SeleniumHQ/docker-selenium
 
+    headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", 
+    "Accept-Encoding": "gzip, deflate", 
+    "Accept-Language": "en,de-DE;q=0.9,de;q=0.8,en-US;q=0.7", 
+    "Cache-Control": "max-age=0", 
+    "Dnt": "1", 
+    "Host": "pr0gramm.com", 
+    "Upgrade-Insecure-Requests": "1", 
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400"
+    }
+
     try:
         # make the request
         url = "https://pr0gramm.com"
+        #url = "http://httpbin.org/get"
         session = HTMLSession()
-        response = session.get(url)
+        response = session.get(url, headers = headers)
+        #response = session.get(url)
         #print("Request yielded: " + str(response.status_code))
         response.html.render()
     except requests.exceptions.RequestException as e:
@@ -29,6 +42,9 @@ def main():
 
     #parse html
     page_soup = soup(response.html.html, "html.parser")
+
+    #print page 
+    #print(page_soup.prettify())
 
     lookFor = "thumb"
     results = page_soup.findAll("a", {'class':lookFor})
@@ -68,21 +84,25 @@ def main():
 
         try:
             tags = content.findAll("span", {"class":"tag"})
-            #tags = re.findall(r'\d+', benis[0].attrs["title"])
-            #post.setTagCount(len(tags))
             for tag in tags:
                 post.addTag(tag)
         except:
             print("smth wrong with tags...")
-            #post.setTagCount(0)
+
+        try:
+            comments = content.findAll("div", {"class":"comment"})
+            for comment in comments:
+                post.addComment(comment)
+        except:
+            print("no comments prb :-(")
 
         #try:
         #    print(str(post.postId) + " has " + str(post.benis) + " benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
         #except:
         #    print(str(post.postId) + " has no public benis, " + str(post.commentCount) + " comments and " + str(len(post.tags)) + " tags.")
 
-        mongo.db.posts.insert_one(BSON.encode(post.toJSON()))
-        print(post.toJSON())
+        #mongo.db.posts.insert_one(BSON.encode(post.toJSON()))
+        #print(post.toJSON())
 
 if __name__ == "__main__":
     main()
